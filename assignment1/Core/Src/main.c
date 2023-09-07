@@ -51,6 +51,63 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
+int is_button_pressed(){
+	if(GPIOC->IDR & 0x2000)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+void put_on_die_dots(int num_dice)
+{
+
+	GPIO_PinState a,b,c,d,e,f,g;
+	a = b = c = d = e = f = g = GPIO_PIN_RESET;
+
+	switch(num_dice)
+	{
+	case 1:
+		d = GPIO_PIN_SET;
+	break;
+
+	case 2:
+		 b = f = GPIO_PIN_SET;
+	break;
+
+	case 3:
+		a = d = g = GPIO_PIN_SET;
+	break;
+
+	case 4:
+		a = c = e = g = GPIO_PIN_SET;
+	break;
+
+	case 5:
+		//FIll this
+	break;
+
+	case 6:
+		a = b = c = e = f = g = GPIO_PIN_SET;
+
+	break;
+
+	default:
+		break;
+	}
+
+	HAL_GPIO_WritePin(DI_A_GPIO_Port, DI_A_Pin, a);
+	HAL_GPIO_WritePin(DI_B_GPIO_Port, DI_B_Pin, b);
+	HAL_GPIO_WritePin(DI_C_GPIO_Port, DI_C_Pin, c);
+	HAL_GPIO_WritePin(DI_D_GPIO_Port, DI_D_Pin, d);
+	HAL_GPIO_WritePin(DI_E_GPIO_Port, DI_E_Pin, e);
+	HAL_GPIO_WritePin(DI_F_GPIO_Port, DI_F_Pin, f);
+	HAL_GPIO_WritePin(DI_G_GPIO_Port, DI_G_Pin, g);
+
+}
 
 /* USER CODE END PFP */
 
@@ -94,8 +151,30 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  	  int pressed;
+  	  int counter = 0;
   while (1)
   {
+	  pressed = is_button_pressed();
+
+	  if(pressed)
+	  {
+		  //LD2 tänd
+		  if(counter == 7)
+		  {
+			  counter = 1;
+		  }
+		  else
+		  {
+			  counter++;
+		  }
+	  }
+	  else
+	  {
+		  //Ld2 off
+		  put_on_die_dots(counter);
+	  }
+	  //Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -158,11 +237,9 @@ static void MX_USART2_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART2_Init 0 */
-
   /* USER CODE END USART2_Init 0 */
 
   /* USER CODE BEGIN USART2_Init 1 */
-
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
   huart2.Init.BaudRate = 115200;
@@ -200,11 +277,11 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|Di_D_Pin|Di_C_Pin|Di_B_Pin
-                          |Di_A_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|DI_D_Pin|DI_C_Pin|DI_B_Pin
+                          |DI_A_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, Di_G_Pin|Di_F_Pin|Di_E_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, DI_G_Pin|DI_F_Pin|DI_E_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -212,17 +289,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin Di_D_Pin Di_C_Pin Di_B_Pin
-                           Di_A_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|Di_D_Pin|Di_C_Pin|Di_B_Pin
-                          |Di_A_Pin;
+  /*Configure GPIO pins : LD2_Pin DI_D_Pin DI_C_Pin DI_B_Pin
+                           DI_A_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|DI_D_Pin|DI_C_Pin|DI_B_Pin
+                          |DI_A_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Di_G_Pin Di_F_Pin Di_E_Pin */
-  GPIO_InitStruct.Pin = Di_G_Pin|Di_F_Pin|Di_E_Pin;
+  /*Configure GPIO pins : DI_G_Pin DI_F_Pin DI_E_Pin */
+  GPIO_InitStruct.Pin = DI_G_Pin|DI_F_Pin|DI_E_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
