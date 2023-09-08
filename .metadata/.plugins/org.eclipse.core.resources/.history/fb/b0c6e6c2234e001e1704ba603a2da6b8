@@ -110,6 +110,53 @@ void put_on_die_dots(int num_dice)
 
 }
 
+void RollingAnimation(int n)
+{
+	GPIO_PinState a,b,c,d,e,f,g;
+	a = b = c = d = e = f = g = GPIO_PIN_RESET;
+	int counter = 1;
+
+	while(n)
+	{
+		if(counter == 7)
+		{
+			counter = 1;
+		}
+		a = b = c = d = e = f = g = GPIO_PIN_RESET;
+		switch(counter)
+		{
+			case 1:
+				a = GPIO_PIN_SET;
+				break;
+			case 2:
+				b = GPIO_PIN_SET;
+				break;
+			case 3:
+				c = GPIO_PIN_SET;
+				break;
+			case 4:
+				e = GPIO_PIN_SET;
+				break;
+			case 5:
+				f = GPIO_PIN_SET;
+				break;
+			case 6:
+				g = GPIO_PIN_SET;
+				break;
+		}
+
+		HAL_GPIO_WritePin(DI_A_GPIO_Port, DI_A_Pin, a);
+		HAL_GPIO_WritePin(DI_B_GPIO_Port, DI_B_Pin, b);
+		HAL_GPIO_WritePin(DI_C_GPIO_Port, DI_C_Pin, c);
+		HAL_GPIO_WritePin(DI_E_GPIO_Port, DI_E_Pin, e);
+		HAL_GPIO_WritePin(DI_F_GPIO_Port, DI_F_Pin, f);
+		HAL_GPIO_WritePin(DI_G_GPIO_Port, DI_G_Pin, g);
+
+		counter++;
+
+	}
+
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -160,6 +207,7 @@ int main(void)
 
 	  if(pressed)
 	  {
+		  //RollingAnimation(pressed);
 		  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
 		  if(counter == 7)
 		  {

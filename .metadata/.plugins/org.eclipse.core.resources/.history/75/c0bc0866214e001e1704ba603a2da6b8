@@ -50,7 +50,6 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void RollingAnimation();
 /* USER CODE BEGIN PFP */
 int is_button_pressed(){
 	if(GPIOC->IDR & 0x2000)
@@ -72,23 +71,23 @@ void put_on_die_dots(int num_dice)
 	switch(num_dice)
 	{
 	case 1:
-		d = GPIO_PIN_SET;
+		d = GPIO_PIN_SET; //works
 	break;
 
 	case 2:
-		 b = f = GPIO_PIN_SET;
+		 b = f = GPIO_PIN_SET; //works
 	break;
 
 	case 3:
-		a = d = g = GPIO_PIN_SET;
+		a = d = g = GPIO_PIN_SET; //works
 	break;
 
 	case 4:
-		a = c = e = g = GPIO_PIN_SET;
+		a = c = e = g = GPIO_PIN_SET; //works
 	break;
 
 	case 5:
-		g = e = d = c = a = GPIO_PIN_SET;
+		g = e =d = c = a= GPIO_PIN_SET;
 	break;
 
 	case 6:
@@ -160,7 +159,7 @@ int main(void)
 
 	  if(pressed)
 	  {
-		  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
+		  //LD2 tänd
 		  if(counter == 7)
 		  {
 			  counter = 1;
@@ -172,7 +171,7 @@ int main(void)
 	  }
 	  else
 	  {
-		  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
+		  //Ld2 off
 		  put_on_die_dots(counter);
 	  }
 	  //Delay(100);
