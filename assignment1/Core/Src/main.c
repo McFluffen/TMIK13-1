@@ -50,18 +50,21 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void RollingAnimation();
 /* USER CODE BEGIN PFP */
-int is_button_pressed(){
+int is_button_pressed()
+{
 	if(GPIOC->IDR & 0x2000)
-	{
-		return 1;
-	}
-	else
 	{
 		return 0;
 	}
+	else
+	{
+		return 1;
+	}
 }
+
+const int sseg[10] = {0x3f,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x7,0x7F,0x6F};
+const int sseg_err = 0xDC;
 
 void put_on_die_dots(int num_dice)
 {
@@ -110,6 +113,18 @@ void put_on_die_dots(int num_dice)
 
 }
 
+void put_on_sseg(int dec_nbr)
+{
+	if((dec_nbr > 0) && (dec_nbr < 10))
+	{
+		GPIOC->ODR = sseg[dec_nbr];
+	}
+	else
+	{
+		GPIOC->ODR = sseg_err;
+	}
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -153,7 +168,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   	  int pressed;
-  	  int counter = 0;
+  	  int counter = 1;
   while (1)
   {
 	  pressed = is_button_pressed();
@@ -161,7 +176,7 @@ int main(void)
 	  if(pressed)
 	  {
 		  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
-		  if(counter == 7)
+		  if(counter == 6)
 		  {
 			  counter = 1;
 		  }
@@ -173,9 +188,10 @@ int main(void)
 	  else
 	  {
 		  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
-		  put_on_die_dots(counter);
 	  }
-	  //Delay(100);
+	  	  put_on_die_dots(counter);
+		  put_on_sseg(counter);
+		  HAL_Delay(200);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -278,11 +294,15 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|DI_D_Pin|DI_C_Pin|DI_B_Pin
-                          |DI_A_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, S_A_Pin|S_B_Pin|S_D_Pin|S_E_Pin
+                          |S_F_Pin|S_G_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, DI_G_Pin|DI_F_Pin|DI_E_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|LD2_Pin|DI_D_Pin|DI_C_Pin
+                          |DI_B_Pin|DI_A_Pin|DI_G_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, DI_E_Pin|DI_F_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -290,21 +310,36 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin DI_D_Pin DI_C_Pin DI_B_Pin
-                           DI_A_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|DI_D_Pin|DI_C_Pin|DI_B_Pin
-                          |DI_A_Pin;
+  /*Configure GPIO pins : S_A_Pin S_B_Pin S_D_Pin S_E_Pin
+                           S_F_Pin S_G_Pin */
+  GPIO_InitStruct.Pin = S_A_Pin|S_B_Pin|S_D_Pin|S_E_Pin
+                          |S_F_Pin|S_G_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : S_C_Pin */
+  GPIO_InitStruct.Pin = S_C_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(S_C_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA1 LD2_Pin DI_D_Pin DI_C_Pin
+                           DI_B_Pin DI_A_Pin DI_G_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|LD2_Pin|DI_D_Pin|DI_C_Pin
+                          |DI_B_Pin|DI_A_Pin|DI_G_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DI_G_Pin DI_F_Pin DI_E_Pin */
-  GPIO_InitStruct.Pin = DI_G_Pin|DI_F_Pin|DI_E_Pin;
+  /*Configure GPIO pins : DI_E_Pin DI_F_Pin */
+  GPIO_InitStruct.Pin = DI_E_Pin|DI_F_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

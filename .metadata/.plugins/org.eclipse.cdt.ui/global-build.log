@@ -1,4 +1,4 @@
-10:43:22 **** Incremental Build of configuration Debug for project assignment1 ****
+14:49:38 **** Incremental Build of configuration Debug for project assignment1 ****
 make -j20 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "assignment1.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Jacob\OneDrive\Dokument\JU Datateknik\2023-HT\MikroDatorTeknik\Labb 1\assignment1\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="assignment1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,26 +7,19 @@ Finished building target: assignment1.elf
 arm-none-eabi-size   assignment1.elf 
 arm-none-eabi-objdump -h -S  assignment1.elf  > "assignment1.list"
    text	   data	    bss	    dec	    hex	filename
-   8080	     20	   1636	   9736	   2608	assignment1.elf
+   8252	     20	   1636	   9908	   26b4	assignment1.elf
 Finished building: default.size.stdout
  
 Finished building: assignment1.list
  
-10:43:26 **** Incremental Build of configuration Debug for project assignment1 ****
+14:49:41 **** Incremental Build of configuration Debug for project assignment1 ****
 make -j20 all 
 arm-none-eabi-size   assignment1.elf 
    text	   data	    bss	    dec	    hex	filename
-   8080	     20	   1636	   9736	   2608	assignment1.elf
+   8252	     20	   1636	   9908	   26b4	assignment1.elf
 Finished building: default.size.stdout
  
-10:43:35 **** Incremental Build of configuration Debug for project assignment1 ****
-make -j20 all 
-arm-none-eabi-size   assignment1.elf 
-   text	   data	    bss	    dec	    hex	filename
-   8080	     20	   1636	   9736	   2608	assignment1.elf
-Finished building: default.size.stdout
- 
-10:44:14 **** Incremental Build of configuration Debug for project assignment1 ****
+14:50:15 **** Incremental Build of configuration Debug for project assignment1 ****
 make -j20 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "assignment1.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Jacob\OneDrive\Dokument\JU Datateknik\2023-HT\MikroDatorTeknik\Labb 1\assignment1\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="assignment1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -35,22 +28,29 @@ Finished building target: assignment1.elf
 arm-none-eabi-size   assignment1.elf 
 arm-none-eabi-objdump -h -S  assignment1.elf  > "assignment1.list"
    text	   data	    bss	    dec	    hex	filename
-   8324	     20	   1636	   9980	   26fc	assignment1.elf
+   8332	     20	   1636	   9988	   2704	assignment1.elf
 Finished building: default.size.stdout
  
 Finished building: assignment1.list
  
-10:45:04 **** Incremental Build of configuration Debug for project assignment1 ****
+14:50:31 **** Incremental Build of configuration Debug for project assignment1 ****
 make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "assignment1.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Jacob\OneDrive\Dokument\JU Datateknik\2023-HT\MikroDatorTeknik\Labb 1\assignment1\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="assignment1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: assignment1.elf
- 
 arm-none-eabi-size   assignment1.elf 
-arm-none-eabi-objdump -h -S  assignment1.elf  > "assignment1.list"
    text	   data	    bss	    dec	    hex	filename
-   8080	     20	   1636	   9736	   2608	assignment1.elf
+   8332	     20	   1636	   9988	   2704	assignment1.elf
 Finished building: default.size.stdout
  
-Finished building: assignment1.list
+15:05:58 **** Incremental Build of configuration Debug for project assignment1 ****
+make -j20 all 
+arm-none-eabi-size   assignment1.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8332	     20	   1636	   9988	   2704	assignment1.elf
+Finished building: default.size.stdout
+ 
+15:06:44 **** Incremental Build of configuration Debug for project assignment1 ****
+make -j20 all 
+arm-none-eabi-size   assignment1.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8332	     20	   1636	   9988	   2704	assignment1.elf
+Finished building: default.size.stdout
  
